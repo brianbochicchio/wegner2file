@@ -1,64 +1,66 @@
 /*
-Listens for connections on port 5001.
-Captures the data and saves it to a local file for TRE to read. 
+Captures data on port 5001 and saves it to a local file
+USE: node wegner2file.js
+
+Optional: Port argument can be added
+USE: node wegner2file.js 8765
+
 */
 
 //Requires & Default Settings 
-var fs = require("fs");
-const Net = require('net');
-const port = 5001;
-const errLog = 'errorlog.txt';
+const fs = require("fs");
+const net = require('net');
+let port = 5001;
 const sngData = 'nowplaying.txt';
+let data;
 
-var data;
+if (process.argv[2]) {
+    port = process.argv[2];
+} else {
+    console.log("Using default port")
+}
+
 
 // ****************  Server  ****************
-// need to add attribution for the starter code
-// Use net.createServer() in your code. This is just for illustration purpose.
-// Create a new TCP server.
-const server = new Net.Server();
 
-server.listen(port, function() {
-    console.log(`Listening on localhost:${port}`);
-    console.log("Press CTRL+C to stop server");
-});
+const server = net.createServer((c) => {
+      console.log('Client connected');
+    c.on('end', () => {
+        console.log('Client disconnected');
+    });
 
-server.on('connection', function(socket) {
-    console.log('Client Connected');
-    socket.write('Hello, client.\n');
-
-    socket.on('data', function(chunk) {
+    c.on('data', function(chunk) {
         writeCaptureToFile(chunk.toString());
-        //console.log(`Data received from client: ${chunk.toString()}`);
     });
 
-    // When the client requests to end the TCP connection with the server, the server
-    // ends the connection.
-    socket.on('end', function() {
-        console.log('Closing connection with the client');
-    });
+    c.write('Hello World\r\n');
 
-    // Don't forget to catch error, for your own sake.
-    socket.on('error', function(err) {
-        console.log('Error: ${err}');
-    });
+});
+
+server.on('error', (err) => {
+    console.log('Error: ${err}');
+    throw err;
+});
+
+server.listen(port, () => {
+    console.log(`Server Online: ${port}`);
 });
 
 // ****************  Server  ****************
 
 
-
-//Returns local time for console and error log
+//Returns current time for use with logging
 function getLogTime(){   
-    var today = new Date();
-    //need to add leading zero
-    var logtime = today.getHours() + ':' + today.getMinutes() + ':' + today.getSeconds();
+    let today = new Date();
+    let hour = (today.getHours() < 10) ? '0' + today.getHours() : today.getHours();
+    let minutes = (today.getMinutes() < 10) ? '0' + today.getMinutes() : today.getMinutes();
+    let seconds = (today.getSeconds() < 10) ? '0' + today.getSeconds() : today.getSeconds();
+    var logtime = hour + ':' + minutes + ':' + seconds;
 
     return logtime; 
 }
 
-
-
+// Write output file
 function writeCaptureToFile(data){
     fs.writeFile(sngData, data, (err) => {
     if (err) console.log(err);
