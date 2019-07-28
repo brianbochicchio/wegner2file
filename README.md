@@ -11,7 +11,7 @@ Hercules by HW-Group is free and fantastic https://www.hw-group.com/software/her
 
 ### Usage and Args
 ***Start Server***
-__
+
 node wegner2file.js
 
 ***Start Server with Custom Port***
@@ -29,7 +29,7 @@ node wegner2file.js 8765
 * Open a terminal session in the folder with wegner2file.js
     * Start it with node wegner2file.js
     * Connect with Hercules TCP Client or another terminal app. 
-    * Once connected you can send the test string:  ^title~artist~1234~SONG~03:00|
+    * Once connected you can send the test string: `` ^title~artist~1234~SONG~03:00| ``
 
 
 ### Testing on Mac
@@ -37,7 +37,7 @@ node wegner2file.js 8765
 * Open a terminal session in the folder with wegner2file.js
     * Start it with node wegner2file.js
     * Open another terminal and connect with nc -v 127.0.0.1 5001
-    * Once connected you can send the test string:  ^title~artist~1234~SONG~03:00|
+    * Once connected you can send the test string: `` ^title~artist~1234~SONG~03:00|``
 
 
 ### Thank you
