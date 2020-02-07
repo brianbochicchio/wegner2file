@@ -2,7 +2,7 @@
 Ingests song metadata from a satellite receiver via tcp and dumps it to a file for TRE's ASCII File input to parse.
 
 ## Requirements
-Node.JS - https://nodejs.org/en/   -- Tested with 10.16.0 LTS
+Node.JS - https://nodejs.org/en/   -- Created with 10.16.0 LTS and Last tested v12.15.0 LTS
 
 TRE is a Windows application that manages broadcast audio metadata.
 
@@ -19,10 +19,12 @@ node wegner2file.js
 node wegner2file.js 8765
 
 
+***Add to Windows Start Up***
+Add the included batch file to Windows startup if you want wegner2file to launch on Windows startup. 
 
 
 ## Testing
-
+Default port is 5001
 
 ### Testing on Windows
 
@@ -36,7 +38,7 @@ node wegner2file.js 8765
 
 * Open a terminal session in the folder with wegner2file.js
     * Start it with node wegner2file.js
-    * Open another terminal and connect with nc -v 127.0.0.1 5001
+    * Open another terminal and connect with nc -v 127.0.0.1 {portnumber}
     * Once connected you can send the test string: `` ^title~artist~1234~SONG~03:00|``
 
 
