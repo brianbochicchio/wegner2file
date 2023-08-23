@@ -2,7 +2,7 @@
 Ingests song metadata from a satellite receiver via tcp and dumps it to a file for TRE's ASCII File input to parse.
 
 ## Requirements
-Node.JS - https://nodejs.org/en/   -- Created with 10.16.0 LTS and Last tested v12.15.0 LTS
+Node.JS - https://nodejs.org/en/   -- Last tested v18.17.2 LTS
 
 TRE is a Windows application that manages broadcast audio metadata.
 
@@ -31,7 +31,7 @@ Default port is 5001
 * Open a terminal session in the folder with wegner2file.js
     * Start it with node wegner2file.js
     * Connect with Hercules TCP Client or another terminal app. 
-    * Once connected you can send the test string: `` ^title~artist~1234~SONG~03:00| ``
+    * Once connected you can send the test string: Title;Artist
 
 
 ### Testing on Mac
@@ -39,7 +39,7 @@ Default port is 5001
 * Open a terminal session in the folder with wegner2file.js
     * Start it with node wegner2file.js
     * Open another terminal and connect with nc -v 127.0.0.1 {portnumber}
-    * Once connected you can send the test string: `` ^title~artist~1234~SONG~03:00|``
+    * Once connected you can send the test string: Title;Artist
 
 
 ### Thank you
