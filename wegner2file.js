@@ -1,6 +1,9 @@
 /*
-Captures data on port 5001 and saves it to a local file
-USE: node wegner2file.js
+Copyright 2023 by Brian Bochicchio for BE DIGITAL MEDIA LLC
+
+Listens on TCP port 5001 (default) for input TITLE;ARTIST\r\n
+from Wegner StorQ2 reciever. Then ouputs a TRE-friendly
+with a static cut id, category and duration
 
 Optional: Port argument can be added
 USE: node wegner2file.js 8765
@@ -23,7 +26,7 @@ const server = net.createServer((c) => {
         console.log('Client disconnected');
     });
     c.on('data', function (chunk) {
-        writeCaptureToFile(chunk.toString());
+            createOutputString(chunk.toString());
     });
 });
 
@@ -46,10 +49,24 @@ function getLogTime() {
     return logtime;
 }
 
+function createOutputString(data){
+    data = data.replace(/[\u0000-\u001F\u007F-\u009F]/g, "") // strip control characters - may result in empty string
+    if (data){
+        let input_details = data.split(';');
+        let song_info = `^${input_details[0]}~${input_details[1]}~100~SONG~03:30|`;
+        writeCaptureToFile(song_info)
+    }
+    else {
+        console.log("Received Empty Input")
+    }
+    
+    
+}
+
 // Write output file
-function writeCaptureToFile(data) {
-    fs.writeFile(sngData, data, (err) => {
+function writeCaptureToFile(song_info) {
+    fs.writeFile(sngData, song_info, (err) => {
         if (err) console.log(err);
-        console.log(getLogTime() + ": " + data);
+        console.log(getLogTime() + ": " + song_info);
     });
 }
